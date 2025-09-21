@@ -426,9 +426,9 @@ void RS232_Init(void)
     ComPortName[sizeof(ComPortName) - 1] = '\0';
     strncat(ComPortName, COMPORT, sizeof(ComPortName) - strlen(ComPortName) - 1);
 
-	/* Can we the Hatari config file instead of a hardcoded COM port name?
+	/* Can we use the Hatari config file instead of a hardcoded COM port name?
 	 *
-	 * Approach:
+	 * Possible approach:
 	 * 
      * If ConfigureParams.RS232.szInFileName == ConfigureParams.RS232.szOutFileName
 	 * and ConfigureParams.RS232.szInFileName begins with "COM" 
