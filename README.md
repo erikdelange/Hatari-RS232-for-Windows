@@ -1,7 +1,3 @@
-##### Hatari: How to use a COM port for serial in- and output on Windows.
-
-
-
 In the Linux version of Atari emulator Hatari you can specify a device file to be used for serial communication. On Windows this does not work, only a 'real' file can be used for serial input and output. The software changes presented in this repository remove this restriction and enable you to connect Hatari to a Windows COM port.
 
 
@@ -18,7 +14,7 @@ Program *echo.c* demonstrates the use of the Win32 API functions for serial comm
 
 
 
-##### Notes
+#### Notes
 
 
 
