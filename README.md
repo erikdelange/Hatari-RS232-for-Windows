@@ -8,14 +8,14 @@ Stand-alone program *echo.c* demonstrates the use of the Win32 API functions for
 
 #### Notes
 
-Only file rs232.c - taken from the Hatari version 2.6.1 repository - is modified, and only lines have been added (see 'diff' with rs232_original.c which is the unchanged version).
+Only file *rs232.c* - taken from the Hatari version 2.6.1 repository - is modified, and only lines have been added (see 'diff' with *rs232_original.c* which is the unchanged version).
 
-The modified code will only be present in a Windows build of Hatari (checked via macro WIN32) and only if macro ENABLECOMPORT has been defined in file rs232.c.
+The modified code will only be present in a Windows build of Hatari (checked via macro WIN32) and only if macro ENABLECOMPORT has been defined in file *rs232.c*.
 
-For now the variable which controls whether to use a COM port (bool UseComPort) and which comport to use (#define COMPORT) are hard-coded in rs232.c. Ideally these would be entries in (the Windows version of) the Hatari configuration file. The comments in function RS232_Init() explain why I failed to get this working.
+For now the variable which controls whether to use a COM port (bool UseComPort) and which comport to use (#define COMPORT) are hard-coded in *rs232.c*. Ideally these would be entries in (the Windows version of) the Hatari configuration file. The comments in function RS232_Init() explain why I failed to get this working.
 
 The name of the device file for a Windows COM port is specified as \\\\.\\COMx, where x is a number. Because in C a \\ indicates the start of an escape sequence the device file name looks like "\\\\\\\\.\\\\COMx".
 
-You have to build your own version of Hatari. This can be done using WSL and the instructions found here: http://clarets.org/steve/projects/20201220\_building\_hatari\_for\_windows.html. These worked perfectly except that LibSDL has moved to GitHub. And of course replace file rs232.c with the one from this repository.
+You have to build your own version of Hatari. I did this using WSL and the instructions found here: http://clarets.org/steve/projects/20201220\_building\_hatari\_for\_windows.html. These worked perfectly except that LibSDL has moved to GitHub. And of course don't forget to replace file *rs232.c* with the one from this repository.
 
-Make sure option *Patch Timer-D* is disabled in the System options of Hatari. If not then Hatari's function to change the baud rate (which uses Timer D) will not work. For convenience the COM port is initialized at 9600 baud 8N1.
+When running Hatari make sure option *Patch Timer-D* is disabled in the System options. If not then Hatari's function to change the baud rate (which uses Timer D) will not work. For convenience the COM port is initialized at 9600 baud 8N1.
