@@ -1,4 +1,4 @@
-###### Hatari: How to use a COM port for serial in- and output on Windows.
+##### Hatari: How to use a COM port for serial in- and output on Windows.
 
 
 
@@ -18,7 +18,7 @@ Program *echo.c* demonstrates the use of the Win32 API functions for serial comm
 
 
 
-###### Notes
+##### Notes
 
 
 
