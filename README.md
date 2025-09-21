@@ -14,7 +14,7 @@ The modified code will only be present in a Windows build of Hatari (checked via
 
 For now the variable which controls whether to use a COM port (bool UseComPort) and which comport to use (#define COMPORT) are hard-coded in *rs232.c*. Ideally these would be entries in (the Windows version of) the Hatari configuration file. The comments in function RS232_Init() explain why I failed to get this working.
 
-The name of the device file for a Windows COM port is specified as \\\\.\\COMx, where x is a number. Because in C a \\ indicates the start of an escape sequence the device file name looks like "\\\\\\\\.\\\\COMx".
+The name of the device file for a Windows COM port is specified as \\\\.\\COMx, where x is a number. Because in C a \\ indicates the start of an escape sequence the device file name looks like "\\\\\\\\.\\\\COMx". See function RS232_Init() how this is done.
 
 You have to build your own version of Hatari. I did this using WSL and the instructions found here: http://clarets.org/steve/projects/20201220\_building\_hatari\_for\_windows.html. These worked perfectly except that LibSDL has moved to GitHub. And of course don't forget to replace file *rs232.c* with the one from this repository.
 
