@@ -12,7 +12,7 @@ Only file rs232.c - taken from the Hatari version 2.6.1 repository - is modified
 
 The modified code will only be present in a Windows build of Hatari (checked via macro WIN32) and only if macro ENABLECOMPORT has been defined in file rs232.c.
 
-For now the two values which control whether to use a COM port (bool UseComPort) and which comport to use (#define COMPORT) are hard-coded in rs232.c. Ideally these would be entries in (the Windows version of) the Hatari configuration file. The comments in function RS232_Init() explain why I failed to get this working.
+For now the variable which controls whether to use a COM port (bool UseComPort) and which comport to use (#define COMPORT) are hard-coded in rs232.c. Ideally these would be entries in (the Windows version of) the Hatari configuration file. The comments in function RS232_Init() explain why I failed to get this working.
 
 The name of the device file for a Windows COM port is specified as \\\\.\\COMx, where x is a number. Because in C a \\ indicates the start of an escape sequence the device file name looks like "\\\\\\\\.\\\\COMx".
 
