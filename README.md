@@ -1,4 +1,4 @@
-In the Linux version of Atari emulator Hatari you can specify a device file to be used for serial communication. On Windows this does not work, only a 'real' file can be used for serial input and output. The software changes presented in this repository remove this restriction and enable you to connect Hatari to a Windows COM port.
+In the Linux version of Atari emulator [Hatari](https://www.hatari-emu.org/index.html) you can specify a device file to be used for serial communication. On Windows this does not work, only a 'real' file can be used for serial input and output. The software changes presented in this repository remove this restriction and enable you to connect Hatari to a Windows COM port.
 
 For accessing a COM port on Windows the fopen/fread/fwrite/fclose functions have been replaced with their equivalents from the Win32 API. All the info I used was retrieved from [About Communications Resources](https://learn.microsoft.com/en-us/windows/win32/devio/about-communications-resources). Functional limitation compared to the Linux version is that the same COM port is used for both input and output.
 
