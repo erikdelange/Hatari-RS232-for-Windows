@@ -773,6 +773,28 @@ void	RS232_Get_DCD_CTS ( uint8_t *pDCD , uint8_t *pCTS )
 	if (!ConfigureParams.RS232.bEnableRS232)
 		return;
 
+#ifdef ENABLECOMPORT
+
+	DWORD ModemStat;
+
+	if (UseComPort) {
+		if (GetCommModemStatus(RS232_MFP.fh, &ModemStat)) {
+			if (ModemStat & MS_CTS_ON)
+				*pCTS = 1;
+			else
+				*pCTS = 0;
+			if (ModemStat & MS_RLSD_ON)
+				*pDCD = 1;
+			else
+				*pDCD = 0;
+		} else
+			Log_Printf(LOG_DEBUG, "RS232_Get_DCD_CTS: Cannot get DCD/CTS status, error %lu\n", GetLastError());
+
+		return;
+	}
+
+#endif /* ENABLECOMPORT */
+
 #if defined(HAVE_SYS_IOCTL_H) && defined(TIOCMGET)
 	int	status = 0;
 	if ( ( RS232_MFP.Read_fd >= 0 ) && RS232_MFP.Read_fd_IsATTY )
