@@ -8,7 +8,7 @@ Stand-alone program *echo.c* demonstrates the use of the Win32 API functions for
 
 #### Notes
 
-Only file *rs232.c* - taken from the Hatari version 2.6.1 repository - is modified, and only lines have been added (see 'diff' with *rs232_original.c* which is the unchanged version).
+Only file *rs232.c* - taken from the Hatari version 2.6.1 repository - is modified, and only lines have been added (do 'diff' with *rs232_original.c* which is the unchanged version).
 
 The modified code will only be present in a Windows build of Hatari (checked via macro WIN32) and only if macro ENABLECOMPORT has been defined in file *rs232.c*.
 
