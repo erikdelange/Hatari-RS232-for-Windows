@@ -428,19 +428,24 @@ void RS232_Init(void)
 
 	/* Can we use the Hatari config file instead of a hardcoded COM port name?
 	 *
-	 * Possible approach:
-	 * 
+	 * Possible approach
+	 * -----------------
      * If ConfigureParams.RS232.szInFileName == ConfigureParams.RS232.szOutFileName
 	 * and ConfigureParams.RS232.szInFileName begins with "COM" 
 	 * then use ConfigureParams.RS232.szInFileName to create ComPortName
 	 * and set UseComPort to true (else set to false).
 	 * 
-	 * Problem:
-	 * 
+	 * Problem
+	 * -------
 	 * This does not work on Windows because when using the UI to enter a value in 
-	 * ConfigureParams.RS232.szInFileName /  szOutFileName this always becomes an 
+	 * ConfigureParams.RS232.szInFileName / szOutFileName this always becomes an 
 	 * absolute path, so including a drive letter and optionally some directories. 
 	 * You cannot enter a value like 'COM9'.
+	 * 
+	 * Alternative
+	 * -----------
+	 * Add two new variables (UseComPort and ComPortName) to the .cfg file which
+	 * can only be maintained directly in the config file, and not via the UI. 
 	 */
 
 #endif /* ENABLECOMPORT */
