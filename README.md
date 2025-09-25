@@ -16,6 +16,6 @@ For now the variable which controls whether to use a COM port (bool UseComPort) 
 
 The name of the device file for a Windows COM port is specified as \\\\.\\COMx, where x is a number. Because in C a \\ indicates the start of an escape sequence the device file name looks like "\\\\\\\\.\\\\COMx". See function RS232_Init() how this is done.
 
-You have to build your own version of Hatari. I did this using WSL and the instructions found here: http://clarets.org/steve/projects/20201220\_building\_hatari\_for\_windows.html. These worked perfectly except that LibSDL has moved to GitHub. And of course don't forget to replace file *rs232.c* with the one from this repository.
+You have to build your own version of Hatari. I did this using WSL and the instructions found here: http://clarets.org/steve/projects/20201220_building_hatari_for_windows.html. These worked perfectly except that LibSDL has moved to GitHub. And of course don't forget to replace file *rs232.c* with the one from this repository.
 
 When running Hatari make sure option *Patch Timer-D* is disabled in the System options. If not then Hatari's function to change the baud rate (which uses Timer D) will not work. For convenience the COM port is initialized at 9600 baud 8N1.
