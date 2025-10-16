@@ -195,6 +195,7 @@ static bool RS232_OpenCOMPort(void)
 #ifdef ENABLECOMPORT
 
 	DCB dcb;
+    COMMTIMEOUTS Timeouts;
 
 	if (UseComPort) {
 		if (RS232_MFP.fh == INVALID_HANDLE_VALUE) {
@@ -228,6 +229,16 @@ static bool RS232_OpenCOMPort(void)
 				} else
 					Log_Printf(LOG_WARN, "RS232: Error %lu setting serial port parameters for %s\n", GetLastError(), ComPortName);
 			}
+
+			if (GetCommTimeouts(RS232_MFP.fh, &Timeouts)) {
+				Timeouts.WriteTotalTimeoutMultiplier = 1; /* ms per character */
+				Timeouts.WriteTotalTimeoutConstant = 50; /* additional ms */
+			    if (SetCommTimeouts(RS232_MFP.fh, &Timeouts))
+					Log_Printf(LOG_INFO, "RS232: Successfully set write timeout for serial port %s\n", ComPortName);
+				else 
+					Log_Printf(LOG_INFO, "RS232: Error %lu setting write timeout for serial port %s\n", GetLastError(), ComPortName);
+			}
+
 			/* Invalidate handles etc. to make sure the original file functions are never used */
 			RS232_MFP.WriteFile = NULL;
 			RS232_MFP.Write_fd = -1;
@@ -841,9 +852,12 @@ static bool RS232_TransferBytesTo(uint8_t *pBytes, int nBytes)
 	if (UseComPort) {
 		if (RS232_MFP.fh != INVALID_HANDLE_VALUE) { /* check if comport is open */
 			if (WriteFile(RS232_MFP.fh, pBytes, nBytes, &Ret, NULL)) {
-				Dprintf(("RS232: Sent %li bytes ($%x ...)\n", Ret, *pBytes));
-				MFP_InputOnChannel ( pMFP_Main , MFP_INT_TRN_BUF_EMPTY , 0 );
-				return true;
+				Dprintf(("RS232: Sent %li bytes of %li ($%x ...)\n", Ret, nBytes, *pBytes));
+				if (Ret == (DWORD)nBytes) {
+					MFP_InputOnChannel ( pMFP_Main , MFP_INT_TRN_BUF_EMPTY , 0 );
+					return true;
+				} else
+					return false; /* short write, something wrong */
 			} else {
 				Dprintf(("RS232: WriteFile error %lu\n", GetLastError()));
 				return false;

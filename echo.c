@@ -27,6 +27,8 @@ int main(int argc, char **argv)
     HANDLE fh;
     COMSTAT Stat;
     DWORD Errors = 0;
+    COMMTIMEOUTS Timeouts;
+    DWORD NumberOfBytesWritten;
     //    DWORD event = 0;
 
     strncpy(ComPortName, "\\\\.\\", sizeof(ComPortName) - 1);
@@ -60,9 +62,27 @@ int main(int argc, char **argv)
         return -1;
     }
 
-    if (!WriteFile(fh, HELLO, sizeof(HELLO), NULL, NULL)) {
+    if (!GetCommTimeouts(fh, &Timeouts)) {
+        printf("GetCommTimeouts: error %lu\n", GetLastError());
+        return -1;
+    }
+
+    Timeouts.WriteTotalTimeoutMultiplier = 1; /* ms per character */
+    Timeouts.WriteTotalTimeoutConstant = 50;  /* additional ms */
+
+    if (!SetCommTimeouts(fh, &Timeouts)) {
+        printf("SetCommTimeouts: error %lu\n", GetLastError());
+        return -1;
+    }
+
+    if (!WriteFile(fh, HELLO, sizeof(HELLO), &NumberOfBytesWritten, NULL)) {
         printf("WriteFile: error %lu while writing '%s'\n", GetLastError(), HELLO);
         return -1;
+    } else {
+        if (NumberOfBytesWritten != sizeof(HELLO)) {
+            printf("WriteFile: written %llu bytes short\n", sizeof(HELLO) - NumberOfBytesWritten);
+            return -1;
+        }
     }
 
     //    SetCommMask(fh, EV_RXCHAR); /* only wait for incoming character */
